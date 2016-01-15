@@ -60,18 +60,33 @@ class StartPage(tk.Frame):
 
 
 #TEXT ENTRY
-		entrybox1 = tk.Entry(self, text="choose file")
-		entrybox1.grid()
+		entrybox1 = tk.Entry(self)
+		entrybox1.grid(row=2,column=2)
+
+		entrybox2 = tk.Entry(self)
+		entrybox2.grid(row=4,column=2)
+
+		entrybox3 = tk.Entry(self)
+		entrybox3.grid(row=6,column=2)
 
 #BUTTONS
 
-		button = tk.Button(self, text="Check (moves to pageone AtTheMoment)",
-							command=lambda: controller.show_frame(PageOne)) #lambda overrides run at creation behavior, see examples online
-		button.grid()
+		button1 = tk.Button(self, text="Browse")
+		button1.grid(row=2,column=4)
 
-		button2 = tk.Button(self, text="Next (moves to pagetwo AtTheMoment)",
+		button2 = tk.Button(self, text="Browse")
+		button2.grid(row=4,column=4)
+
+		button3 = tk.Button(self, text="Browse")
+		button3.grid(row=6,column=4)
+
+		button4 = tk.Button(self, text="Check", #moves to page one at the moment
+							command=lambda: controller.show_frame(PageOne)) #lambda overrides run at creation behavior, see examples online
+		button4.grid(row=8,column = 2)
+
+		button5 = tk.Button(self, text="Next", #moves to page two at the moment
 							command=lambda: controller.show_frame(PageTwo))
-		button2.grid()
+		button5.grid(row=8,column=4)
 
 
 class PageOne(tk.Frame):
