@@ -42,7 +42,7 @@ class modisApp(tk.Tk):
 
 			frame.grid(row=0, column=0, sticky="nsew")
 
-		self.show_frame(SplashPage)	#First windo to show - Splash screen
+		self.show_frame(SplashPage)	#First window to show - Splash screen
 
 	def show_frame(self, cont):
 
@@ -66,28 +66,30 @@ class InputPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self,parent)
 
+#DEFINING METHODS
+
 		def OpenHDF_cp(): #cp  = cloud products
-			filein = openfile.askopenfile(filetypes = (("HDF file", "*.hdf"),("All files", "*.*")))
-			if(filein != None):			# 'Nonetype' has no .name attribute
+			filein1 = openfile.askopenfile(filetypes = (("HDF file", "*.hdf"),("All files", "*.*")))
+			if(filein1 != None):			# 'Nonetype' has no .name attribute
 				entrybox1.delete(0, END)
-				entrybox1.insert(0, filein.name)
+				entrybox1.insert(0, filein1.name)
 
 		def OpenHDF_cm(): #cm = cloud mask
-			filein = openfile.askopenfile(filetypes = (("HDF file", "*.hdf"),("All files", "*.*")))
-			if(filein != None):			# 'Nonetype' has no .name attribute
+			filein2 = openfile.askopenfile(filetypes = (("HDF file", "*.hdf"),("All files", "*.*")))
+			if(filein2 != None):			# 'Nonetype' has no .name attribute
 				entrybox2.delete(0, END)
-				entrybox2.insert(0, filein.name)
+				entrybox2.insert(0, filein2.name)
 
 		def OpenHDF_geo(): #geo = geolocation
-			filein = openfile.askopenfile(filetypes = (("HDF file", "*.hdf"),("All files", "*.*")))
-			if(filein != None):			# 'Nonetype' has no .name attribute
+			filein3 = openfile.askopenfile(filetypes = (("HDF file", "*.hdf"),("All files", "*.*")))
+			if(filein3 != None):			# 'Nonetype' has no .name attribute
 				entrybox3.delete(0, END)
-				entrybox3.insert(0, filein.name)
+				entrybox3.insert(0, filein3.name)
 
 		def Clear(): #clears inputs
 			entrybox1.delete(0,END)
 			entrybox2.delete(0,END)
-			entrybox2.delete(0,END)
+			entrybox3.delete(0,END)
 
 #LABELS
 		label = tk.Label(self, text="Input", font=L_FONT)
@@ -130,7 +132,7 @@ class InputPage(tk.Frame):
 							command=lambda: controller.show_frame(AttributesPage)) #lambda overrides run at creation behavior, see examples online
 		checkButton.grid(row=8,column=2,sticky=E, padx = 5, pady = 5)
 
-		nextButton = tk.Button(self, text="Next", #moves to page two at the moment
+		nextButton = tk.Button(self, text="Next",
 							command=lambda: controller.show_frame(RenderPage))
 		nextButton.grid(row=8,column=4, padx = 5, pady = 5)
 
@@ -142,31 +144,51 @@ class AttributesPage(tk.Frame):
 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="Attributes", font=L_FONT)
-		label.pack(pady=10,padx=10)
+		label1 = tk.Label(self, text="Attributes", font=L_FONT)
+		label1.grid(row = 0, column = 2, padx = 5, pady = 5)
+#LISTBOX SELECTOR (MOD)
 
+		listbox1 = Listbox(self, font = L_FONT, width = 8, height = 8)
+		listbox1.insert(END, 'MOD 06')
+		listbox1.insert(END, 'MOD 35')
+		listbox1.insert(END, 'MOD 03')
+		listbox1.grid(row = 2,column = 0,padx = 5,pady=5)
+
+#LISTBOX SELECTOR (SCIENTIFIC DATA SETS)
+
+		listbox2 = Listbox(self, font = M_FONT, width = 10, height = 10)
+
+		#Create event to populate list when MOD is selected
+
+		listbox2.grid(row = 2,column = 2, padx = 5,pady = 5)
+
+#TEXT AREA
+
+		textarea = Text(self, width = 20, height = 10)
+		textarea.grid(row = 2,column = 6, padx = 5,pady = 5)
+
+#BUTTONS
 		button1 = tk.Button(self, text="Back",
 							command=lambda: controller.show_frame(InputPage))
-		button1.pack()
+		button1.grid(row = 10, column = 2, padx = 5, pady = 5)
 
 		button2 = tk.Button(self, text="Next",
 							command=lambda: controller.show_frame(RenderPage))
-		button2.pack()
+		button2.grid(row = 10, column = 6, padx = 5, pady = 5)
 
 
 class RenderPage(tk.Frame):
 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = tk.Label(self, text="Render Page", font=L_FONT)
-		label.pack(pady=10,padx=10)
 
-		button1 = tk.Button(self, text="Back to Home",
-							command=lambda: controller.show_frame(InputPage))
+		label = tk.Label(self, text="Render Page", font=L_FONT)
+		label.pack()
+
+		button1 = tk.Button(self, text="Back to Home",command=lambda: controller.show_frame(InputPage))
 		button1.pack()
 
-		button2 = tk.Button(self, text="Page One",
-							command=lambda: controller.show_frame(AttributesPage))
+		button2 = tk.Button(self, text="Page One",command=lambda: controller.show_frame(AttributesPage))
 		button2.pack()
 
 
