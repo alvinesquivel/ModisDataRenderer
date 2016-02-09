@@ -1,6 +1,7 @@
 #!/usr/bin/python27
 import Tkinter as tk
 from Tkinter import *
+import ttk
 import tkMessageBox as mbox # for popup message boxes
 import tkFileDialog as openfile # for Opening Files
 
@@ -14,6 +15,9 @@ class modisApp(tk.Tk):
 	def __init__(self, *args, **kwargs):
 
 		tk.Tk.__init__(self, *args, **kwargs)
+
+		tk.Tk.iconbitmap(self,default='clienticon.ico')
+		tk.Tk.wm_title(self, "Modis Data Renderer")
 
 		container = tk.Frame(self)
 		container.pack(side="top", fill="both", expand = True)
@@ -55,10 +59,10 @@ class SplashPage(tk.Frame):
 
 		tk.Frame.__init__(self, parent)
 
-		label = tk.Label(self, text="WELCOME!", font=L_FONT)
+		label = ttk.Label(self, text="WELCOME!", font=L_FONT)
 		label.pack(pady=10,padx=10)
 
-		Button = tk.Button(self, text='Next',font=L_FONT, command= lambda: controller.show_frame(InputPage))
+		Button = ttk.Button(self, text='Next', command= lambda: controller.show_frame(InputPage))
 		Button.pack(side=BOTTOM, pady=20)
 
 class InputPage(tk.Frame):
@@ -92,51 +96,51 @@ class InputPage(tk.Frame):
 			entrybox3.delete(0,END)
 
 #LABELS
-		label = tk.Label(self, text="Input", font=L_FONT)
+		label = ttk.Label(self, text="Input", font=L_FONT)
 		label.grid(row=0,column=0, pady = 10)
 
-		label1 = tk.Label(self, text="MOD06 Cloud Properties", font=M_FONT)
+		label1 = ttk.Label(self, text="MOD06 Cloud Properties", font=M_FONT)
 		label1.grid(row=2,column=0,sticky=W, padx = 5, pady = 5)
 
-		label2 = tk.Label(self, text="MOD35 Cloud Mask", font=M_FONT)
+		label2 = ttk.Label(self, text="MOD35 Cloud Mask", font=M_FONT)
 		label2.grid(row=4,column=0,sticky=W, padx = 5, pady = 5)
 
-		label3 = tk.Label(self, text="MOD03 Geolocation", font=M_FONT)
+		label3 = ttk.Label(self, text="MOD03 Geolocation", font=M_FONT)
 		label3.grid(row=6,column=0,sticky=W, padx = 5, pady = 5)
 
 
 							#	.grid() layout manager ignores empty rows and columns
 							#	left an empty row between the 3 labels for easier adjusting in the future
 #TEXT BOXES
-		entrybox1 = tk.Entry(self)
+		entrybox1 = ttk.Entry(self)
 		entrybox1.grid(row=2,column=2,padx = 5, pady = 5)
 
-		entrybox2 = tk.Entry(self)
+		entrybox2 = ttk.Entry(self)
 		entrybox2.grid(row=4,column=2, padx = 5, pady = 5)
 
-		entrybox3 = tk.Entry(self)
+		entrybox3 = ttk.Entry(self)
 		entrybox3.grid(row=6,column=2, padx = 5, pady = 5)
 
 #BUTTONS
 
-		button1 = tk.Button(self, text="Browse", command=OpenHDF_cp)
+		button1 = ttk.Button(self, text="Browse", command=OpenHDF_cp)
 		button1.grid(row=2,column=4, padx = 5, pady = 5)
 
-		button2 = tk.Button(self, text="Browse", command=OpenHDF_cm)
+		button2 = ttk.Button(self, text="Browse", command=OpenHDF_cm)
 		button2.grid(row=4,column=4, padx = 5, pady = 5)
 
-		button3 = tk.Button(self, text="Browse", command=OpenHDF_geo)
+		button3 = ttk.Button(self, text="Browse", command=OpenHDF_geo)
 		button3.grid(row=6,column=4, padx = 5, pady = 5)
 
-		checkButton = tk.Button(self, text="Check Attributes", #moves to page one at the moment
+		checkButton = ttk.Button(self, text="Check Attributes", #moves to page one at the moment
 							command=lambda: controller.show_frame(AttributesPage)) #lambda overrides run at creation behavior, see examples online
 		checkButton.grid(row=8,column=2,sticky=E, padx = 5, pady = 5)
 
-		nextButton = tk.Button(self, text="Next",
+		nextButton = ttk.Button(self, text="Next",
 							command=lambda: controller.show_frame(RenderPage))
 		nextButton.grid(row=8,column=4, padx = 5, pady = 5)
 
-		clear = tk.Button(self, text="Clear", command=Clear)
+		clear = ttk.Button(self, text="Clear", command=Clear)
 		clear.grid(row=8, column=0, padx = 5, pady = 5)
 
 
@@ -144,7 +148,7 @@ class AttributesPage(tk.Frame):
 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label1 = tk.Label(self, text="Attributes", font=L_FONT)
+		label1 = ttk.Label(self, text="Attributes", font=L_FONT)
 		label1.grid(row = 0, column = 2, padx = 5, pady = 5)
 #LISTBOX SELECTOR (MOD)
 
@@ -156,7 +160,7 @@ class AttributesPage(tk.Frame):
 
 #LISTBOX SELECTOR (SCIENTIFIC DATA SETS)
 
-		listbox2 = Listbox(self, font = M_FONT, width = 10, height = 10)
+		listbox2 = Listbox(self, font = M_FONT, width = 10, height = 8)
 
 		#Create event to populate list when MOD is selected
 
@@ -168,11 +172,11 @@ class AttributesPage(tk.Frame):
 		textarea.grid(row = 2,column = 6, padx = 5,pady = 5)
 
 #BUTTONS
-		button1 = tk.Button(self, text="Back",
+		button1 = ttk.Button(self, text="Back",
 							command=lambda: controller.show_frame(InputPage))
 		button1.grid(row = 10, column = 2, padx = 5, pady = 5)
 
-		button2 = tk.Button(self, text="Next",
+		button2 = ttk.Button(self, text="Next",
 							command=lambda: controller.show_frame(RenderPage))
 		button2.grid(row = 10, column = 6, padx = 5, pady = 5)
 
@@ -182,13 +186,13 @@ class RenderPage(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 
-		label = tk.Label(self, text="Render Page", font=L_FONT)
+		label = ttk.Label(self, text="Render Page", font=L_FONT)
 		label.pack()
 
-		button1 = tk.Button(self, text="Back to Home",command=lambda: controller.show_frame(InputPage))
+		button1 = ttk.Button(self, text="Back to Home",command=lambda: controller.show_frame(InputPage))
 		button1.pack()
 
-		button2 = tk.Button(self, text="Page One",command=lambda: controller.show_frame(AttributesPage))
+		button2 = ttk.Button(self, text="Page One",command=lambda: controller.show_frame(AttributesPage))
 		button2.pack()
 
 
