@@ -27,11 +27,14 @@ sds = mod06.select(sds_name)
 data = sds.attributes(full=1)
 data_keys_lst = data.keys()
 print "\n"
+print "**************************************\n"
+print "CLOUD OPTICAL THICKNESS METADATA\n"
+print "======================================\n"
 for key in data_keys_lst:
 	print key + ":"
 	print data[key]
 	print "\n"
-
+print "=======================================\n"
 
 
 
