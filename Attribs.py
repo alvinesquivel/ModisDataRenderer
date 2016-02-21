@@ -20,7 +20,7 @@ sds_name = "Cloud_Mask"
 sds = mod35.select(sds_name)
 
 data = sds.attributes(full=1)
-print type(data['description'])
+print data['description']
 
 
 mod35.end()
