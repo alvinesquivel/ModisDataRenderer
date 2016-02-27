@@ -10,8 +10,8 @@ from scipy.interpolate import griddata
 
 #Read HDF Files
 
-MOD06_FILE_NAME = 'E:\School Files\Special Problem\MODIS\MOD06\MOD06_L2.A2015188.0215.006.2015190003732.hdf'
-MOD03_FILE_NAME = 'E:\School Files\Special Problem\MODIS\MOD03\MOD03.A2015188.0215.006.2015188145151.hdf'
+MOD06_FILE_NAME = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD06\MOD06_L2.A2015188.0215.006.2015190003732.hdf'
+MOD03_FILE_NAME = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD03\MOD03.A2015188.0215.006.2015188145151.hdf'
 mod06 = SD(MOD06_FILE_NAME, SDC.READ)
 mod03 = SD(MOD03_FILE_NAME, SDC.READ)
 mod03_Latitude = mod06.select('Latitude')

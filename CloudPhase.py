@@ -7,11 +7,11 @@ import sys
 
 #Read HDF Files
 
-MOD06_FILE_NAME = 'E:\School Files\Special Problem\MODIS\MOD06\MOD06_L2.A2015188.0215.006.2015190003732.hdf'
+MOD06_FILE_NAME = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD06\MOD06_L2.A2015348.0215.006.2015348152515.hdf'
 mod06 = SD(MOD06_FILE_NAME, SDC.READ)
 mod06_sds = mod06.select('Cloud_Phase_Optical_Properties')
 mod06_sds_data = mod06_sds.get()
-
+print type(mod06_sds_data)
 print ("HDF file loaded")
 
 

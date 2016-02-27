@@ -12,14 +12,18 @@ sds = mod06.select('Cloud_Optical_Thickness')
 sds_data = sds.get()
 
 
-print sds_data
+
+#print sds_data
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
 cmap = plt.cm.rainbow
-bounds = [0, 30, 60, 90, 120, 150]
+bounds = [-100, 30, 60, 90, 120, 150]
 norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
 sds_data = sds_data * 0.01
-img = plt.imshow(np.fliplr(sds_data), vmin = 0.0, vmax = 150.0, cmap = cmap, interpolation = 'none', origin = 'lower')
+
+
+img = plt.imshow(np.flipud(sds_data), vmin = 0.0, vmax = 150.0, cmap = cmap, interpolation = 'none', origin = 'lower')
+cbar = plt.colorbar(img, cmap=cmap, norm=norm, boundaries=bounds, ticks=[-100, 30, 60, 90, 120, 150])
 plt.title('MODIS L2 Cloud Optical Thickness', fontsize=10)
 plt.show()
