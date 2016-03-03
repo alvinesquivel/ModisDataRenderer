@@ -55,6 +55,10 @@ print "lat_0 and lon_0 done"
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.patch.set_facecolor('white')
+def format_coord(x, y):
+	return 'Longitude={:6.3f}\nLatitude={:6.3f}\nPixel value:'.format(x, y)
+ax.format_coord = format_coord
+
 m1 = Basemap(projection='ortho',lon_0=lon_0,lat_0=lat_0,resolution=None)
 xpt0, ypt0 = m1(lon_0,lat_0)
 xpt1, ypt1 = m1(mod03_Longitude_data[0,0],mod03_Latitude_data[0,0])
