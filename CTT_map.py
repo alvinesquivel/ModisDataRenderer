@@ -16,7 +16,7 @@ mod06 = SD(MOD06_FILE_NAME, SDC.READ)
 mod03 = SD(MOD03_FILE_NAME, SDC.READ)
 mod03_Latitude = mod06.select('Latitude')
 mod03_Longitude = mod06.select('Longitude')
-mod06_sds = mod06.select('Cloud_Top_Pressure')
+mod06_sds = mod06.select('Cloud_Top_Temperature')
 mod03_Latitude_data = mod03_Latitude.get()
 mod03_Longitude_data = mod03_Longitude.get()
 mod06_sds_data = mod06_sds.get()
@@ -77,7 +77,7 @@ x_igrid, y_igrid = m(lon,lat)
 x_igrid = x_igrid - xpt0
 y_igrid = y_igrid - ypt0
 z_igrid = mod06_sds.get()
-z_igrid = z_igrid * 0.1
+z_igrid = z_igrid * 0.01
 x1_igrid = x_igrid.ravel()
 y1_igrid = y_igrid.ravel()
 z1_igrid = z_igrid.ravel()
@@ -86,17 +86,16 @@ xi, yi = np.mgrid[llx:urx:1000j, lly:ury:1000j]
 z = griddata(xy1_igrid, z1_igrid, (xi, yi), method='cubic')
 cmap = plt.cm.nipy_spectral
 #mpl.colors.ListedColormap(['k', '0.55', '#0D0575', '#C9CDEC', '#CBC206'])
-bounds = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100]
+bounds = np.arange(0, 301, 20)
 norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
-#img = m.imshow(np.flipud(z_igrid), origin='lower', vmin = 0.0, vmax=1100.0, cmap=cmap)
-img = m.imshow(z.T, origin='lower', vmin = 0.0, vmax=1100.0, cmap=cmap)
-cbar = m.colorbar(img, cmap=cmap, norm=norm, boundaries=bounds, ticks=[0, 100, 200, 300, 400, 500,
-                                                                       600, 700, 800, 900, 1000, 1100])
-cbar.ax.set_yticklabels([0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100], fontsize=10)
+img = m.imshow(z.T, vmin = 0.0, vmax=300.0, cmap=cmap, interpolation = 'nearest', origin='lower')
+cbar = plt.colorbar(img, cmap=cmap, norm=norm, boundaries=bounds, ticks=bounds)
+cbar.set_label("Kelvin (K)")
+#cbar.ax.set_yticklabels(bounds, fontsize=10)
 m.drawcoastlines()
-m.drawparallels(np.arange(-90.,120.,5.), color='k', labels=[True,False,False,False])
-m.drawmeridians(np.arange(115.,360.,5.), color='k', labels=[False,False,False,True])
+m.drawparallels(np.arange(-90.,120.,5.), color='w', labels=[True,False,False,False])
+m.drawmeridians(np.arange(115.,360.,5.), color='w', labels=[False,False,False,True])
 ax.set_xlabel("", fontsize=10)
 ax.set_ylabel("", fontsize=10)
-plt.title('MODIS L2 Cloud Top Pressure', fontsize=10)
+plt.title('MODIS L2 Cloud Top Temperature', fontsize=10)
 plt.show()

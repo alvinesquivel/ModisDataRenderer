@@ -11,19 +11,23 @@ mod06 = SD(_file, SDC.READ)
 sds = mod06.select('Cloud_Optical_Thickness')
 sds_data = sds.get()
 
+for x in np.nditer(sds_data, op_flags = ['readwrite']):
+	if (x[...] == -9999):
+		x[...] = 0
 
 
 #print sds_data
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
-cmap = plt.cm.rainbow
-bounds = [-100, 30, 60, 90, 120, 150]
+cmap = plt.cm.nipy_spectral
+bounds = np.arange(0, 151, 10)
 norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
 sds_data = sds_data * 0.01
 
 
-img = plt.imshow(np.flipud(sds_data), vmin = 0.0, vmax = 150.0, cmap = cmap, interpolation = 'none', origin = 'lower')
-cbar = plt.colorbar(img, cmap=cmap, norm=norm, boundaries=bounds, ticks=[-100, 30, 60, 90, 120, 150])
+
+img = plt.imshow(np.flipud(sds_data), vmin = 0.0, vmax = 150.0, cmap = cmap, interpolation = 'nearest', origin = 'lower')
+cbar = plt.colorbar(img, cmap=cmap, norm=norm, boundaries=bounds, ticks=bounds)
 plt.title('MODIS L2 Cloud Optical Thickness', fontsize=10)
 plt.show()
