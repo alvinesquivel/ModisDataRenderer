@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import numpy as np
 from pyhdf.SD import SD, SDC
-from mpl_toolkits.basemap import Basemap, cm
+from mpl_toolkits.basemap import Basemap
 from scipy import interpolate
 from scipy.interpolate import griddata
 

@@ -97,6 +97,8 @@ img = m.imshow(z.T, origin='lower', vmin = 0.0, vmax=1100.0, cmap=cmap)
 cbar = m.colorbar(img, cmap=cmap, norm=norm, boundaries=bounds, ticks=[0, 100, 200, 300, 400, 500,
                                                                        600, 700, 800, 900, 1000, 1100])
 cbar.ax.set_yticklabels([0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100], fontsize=10)
+cbar.set_label("Hectopascal (hPa)")
+
 m.drawcoastlines()
 m.drawparallels(np.arange(-90.,120.,5.), color='k', labels=[True,False,False,False])
 m.drawmeridians(np.arange(115.,360.,5.), color='k', labels=[False,False,False,True])

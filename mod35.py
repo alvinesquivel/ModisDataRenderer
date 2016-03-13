@@ -5,18 +5,18 @@ import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from mpl_toolkits.basemap import Basemap
 
-_filename = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD35\MOD35_L2.A2015348.0215.006.2015348134053.hdf'
-_filename1 = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD03\MOD03.A2015348.0215.006.2015348085433.hdf'
-_filename2 = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD06\MOD06_L2.A2015348.0215.006.2015348152515.hdf'
+_filename = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD35\MOD35_L2.A2012004.0215.006.2015055131835.hdf'
+_filename1 = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD03\MOD03.A2012004.0215.006.2012285090648.hdf'
+#_filename2 = 'C:\Users\AKO NA LNG\Desktop\Esquivel Files\School Files 2\Special Problem\MODIS\MOD06\MOD06_L2.A2015348.0215.006.2015348152515.hdf'
 mod35 = SD(_filename, SDC.READ)
 mod03 = SD(_filename1, SDC.READ)
-mod06 = SD(_filename2, SDC.READ)
+#mod06 = SD(_filename2, SDC.READ)
 mod03_lat = mod03.select('Latitude')
 mod03_lon = mod03.select('Longitude')
 mod03_lat_data = mod03_lat.get()
 mod03_lon_data = mod03_lon.get()
 mod35_sds = mod35.select('Cloud_Mask')
-mod06_sds = mod06.select('Cloud_Optical_Thickness')
+#mod06_sds = mod06.select('Cloud_Optical_Thickness')
 
 
 
@@ -74,12 +74,13 @@ lat = mod03_lat_data
 x_igrid, y_igrid = m(lon, lat)
 x_igrid = x_igrid - xpt0
 y_igrid = y_igrid - ypt0
-mod06_sds_data = mod06_sds.get()
-print mod06_sds_data.dtype
-print mod06_sds_data.shape
+#mod06_sds_data = mod06_sds.get()
+#print mod06_sds_data.dtype
+#print mod06_sds_data.shape
 sds_data = mod35_sds.get()
 sds_data_0 = sds_data[0, :, :]
 sds_data_0_bin = sds_data_0.astype(dtype = np.uint8, order = 'K', casting = 'unsafe', subok = False, copy = False)
+
 for x in np.nditer(sds_data_0_bin, op_flags = ['readwrite']):
 	x[...] = np.right_shift(x, 6)
 
@@ -87,32 +88,31 @@ for y in np.nditer(sds_data_0_bin, op_flags = ['readwrite']):
 	if (y[...] == 3 or y[...] == 2):
 		y[...] = 0
 
-sds_data_0_bin_int16 =  sds_data_0_bin.astype(dtype = np.int16, order = 'K', casting = 'unsafe', subok = False, copy = False)
-#z_igrid = sds_data_0_bin
+#sds_data_0_bin_int16 =  sds_data_0_bin.astype(dtype = np.int16, order = 'K', casting = 'unsafe', subok = False, copy = False)
+z_igrid = sds_data_0_bin
 #print z_igrid[0,0]
 
-for i in np.nditer(sds_data_0_bin_int16, op_flags = ['readwrite']):
-	for j in np.nditer(mod06_sds_data):
-		k = j
-	if (i[...] == 0):
-		i[...] = k
-	print i
-
-
-
-
-#x_igrid = x_igrid.ravel()
-#y_igrid = y_igrid.ravel()
-#z_igrid = z_igrid.ravel()
-#xy1_igrid = np.vstack((x_igrid, y_igrid)).T
-#cmap = plt.cm.gnuplot2
-#bounds = np.arange(0, 2, 1)
-#norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
-#img = m.imshow(np.flipud(z_igrid), origin = 'lower', vmin = 0.0, vmax = 1.0, cmap = cmap)
-#plt.title("Map")
-
+#for i in np.nditer(sds_data_0_bin_int16, op_flags = ['readwrite']):
+#	for j in np.nditer(mod06_sds_data):
+#		k = j
+#	if (i[...] == 0):
+#		i[...] = k
+#	print i
+x1_igrid = x_igrid.ravel()
+y1_igrid = y_igrid.ravel()
+#z1_igrid = z_igrid.ravel()
+xy1_igrid = np.vstack((x1_igrid, y1_igrid)).T
+cmap = plt.cm.gnuplot2
+bounds = np.arange(0, 2, 1)
+norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+img = m.imshow(np.flipud(z_igrid), origin = 'lower', vmin = 0.0, vmax = 1.0, cmap = cmap)
 #m.drawcoastlines()
-#plt.show()
+m.drawparallels(np.arange(-90.,120.,5.), color='w', labels=[True,False,False,False])
+m.drawmeridians(np.arange(115.,360.,5.), color='w', labels=[False,False,False,True])
+
+
+plt.title("Map")
+plt.show()
 
 
 

@@ -49,13 +49,13 @@ for z in np.nditer(sds_data_0_bin, op_flags=['readwrite']):
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
-cmap = plt.cm.gist_earth
-bounds = [0, 1, 2, 3]
+cmap = plt.cm.YlGn
+bounds = np.arange(0, 4, 1)
 norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
 img = plt.imshow(np.flipud(sds_data_0_bin), vmin = 0, vmax = 3, cmap = cmap, interpolation = 'nearest',
 	origin = 'lower')
-cbar = plt.colorbar(img, cmap = cmap, norm = norm, boundaries = bounds, ticks = [0, 1, 2, 3])
-cbar.ax.set_yticklabels(['Cloudy', 'Uncertain Clear', 'Probably Clear', 'Confident Clear'], fontsize = 10)
+cbar = plt.colorbar(img, cmap = cmap, norm = norm, boundaries = None, ticks = bounds)
+cbar.ax.set_yticklabels(['Confident Cloudy', 'Probably Cloudy', 'Probably Clear', 'Confident Clear'], fontsize = 10)
 ax.set_xlabel("", fontsize = 7)
 ax.set_ylabel("", fontsize = 1)
 plt.title("Cloud Mask - Unobstructed FOV Quality", fontsize = 10)
