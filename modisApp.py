@@ -114,25 +114,30 @@ Licensee, or any third party.
 
 """
 
-
+#Imports
 
 from Tkinter import *
 import Tkinter as tk
 from Tkinter import StringVar
 import ttk
-import tkMessageBox as mbox # for popup message boxes
-import tkFileDialog as openfile # for Opening Files
+import tkMessageBox as mbox 				# for popup message boxes
+import tkFileDialog as openfile 			# for Opening Files
+import FileDialog 							#for building exe
 
 import numpy as np
 from pyhdf.SD import SD, SDC, SDS
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
-import sys
-
 from mpl_toolkits.basemap import Basemap
 from scipy import interpolate
 from scipy.interpolate import griddata
+from scipy import integrate					#for building exe
+import sys
+import os
+
+import six.moves							#for building exe
+
 
 L_FONT = ("Verdana", 12)
 M_FONT = ("Verdana", 10)
@@ -165,12 +170,12 @@ class modisApp(tk.Tk):
 		tk.Tk.__init__(self, *args, **kwargs)
 
 		self.filenames = {"mod06": tk.StringVar(), "mod35": tk.StringVar(), "mod03": tk.StringVar()}
-
+		self.icon = 'clienticon.ico'
 		self.filenames["mod06"].set("")
 		self.filenames["mod35"].set("")
 		self.filenames["mod03"].set("")
 
-		tk.Tk.iconbitmap(self, default = 'clienticon.ico')
+		tk.Tk.wm_iconbitmap(self, default = self.icon)
 		tk.Tk.wm_title(self, "Modis Data Renderer")
 
 		container = tk.Frame(self)
